@@ -1,40 +1,45 @@
 const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
+  output: {
+    path: path.join(__dirname, '/dist'),
+    filename: 'bundle.js'
+  }, 
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: 
+         {
+           loader: 'babel-loader'
+         }
       },
       {
         test: /\.css$/,
-        use: [
-              'style-loader',
-              'css-loader'
-             ]
-
+        use: [ 
+         {
+         loader: 'style-loader',
+         },
+         {
+         loader:   'css-loader'
+         }
+       ]  
       }      
     ]
   },
   
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       template: './src/index.html'
     })
   ],
   resolve: {
     extensions: ['*', '.js', '.jsx']
-  },
-  output: {
-    path: path.join(__dirname + '/dist'),
-    filename: 'index_bundle.js'
-  }, 
-  devServer: { 
-    contentBase: '/dist'
   },
 
 };
