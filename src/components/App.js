@@ -6,7 +6,8 @@ const PATH_BASE= 'https://deckofcardsapi.com/api/deck/';
 const PATH_NEW= '/new';
 const PATH_SHUFFLE= '/shuffle/';
 const PATH_DRAW='/draw/';
-const PATH_COUNT='?count=52';
+const PATH_DECK_COUNT='?deck_count=6';
+const PATH_COUNT='?count=312';
 
 
 
@@ -31,7 +32,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios(`${PATH_BASE}${PATH_NEW}${PATH_SHUFFLE}`)
+    axios(`${PATH_BASE}${PATH_NEW}${PATH_SHUFFLE}${PATH_DECK_COUNT}`)
       .then(response => { const id= response.data.deck_id;
       axios(`${PATH_BASE}${id}${PATH_DRAW}${PATH_COUNT}`)
         .then(response => response.data.cards.map(result => (
